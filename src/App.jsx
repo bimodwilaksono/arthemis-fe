@@ -1,5 +1,11 @@
+import {Login} from "./pages/Login/Login.jsx";
+
 function App() {
-    return <></>;
+    return (
+        <>
+            <Login/>
+        </>
+    )
 }
 
 export default App;
