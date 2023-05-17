@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 
-import loading from "../../../assets/loading-13.json"
+import loading from "../../assets/loading-13.json"
 
 function PreLoading() {
     return(
