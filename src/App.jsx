@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { constants } from './constants/index.js'
-import { Register } from './pages/Register/Register.jsx'
+import Register from './pages/Register/Register.jsx'
 import { ThemeProvider } from './ThemeProvider'
 import Layouts from './components/Layouts'
 import PreLoading from './components/Loading/index.jsx'

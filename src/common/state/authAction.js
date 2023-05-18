@@ -11,3 +11,9 @@ export function logout() {
         authServices.logout(dispatch);
     };
 }
+
+export function register({ name, email, password }, callback) {
+    return function (dispatch) {
+        authServices.register(dispatch, { name, email, password }, callback);
+    };
+}

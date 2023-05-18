@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../../constants/actionTypes";
+import { LOGIN, LOGOUT, REGISTER } from "../../constants/actionTypes";
 import { getToken } from "../../utils/token";
 
 const token = getToken();
@@ -18,6 +18,11 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 token: action.data,
             };
+        case REGISTER:
+            return {
+                ...state,
+                token: action.data,
+            };  
         default:
             return {
                 ...initialState,
