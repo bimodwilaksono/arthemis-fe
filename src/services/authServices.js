@@ -1,38 +1,39 @@
-import { LOGIN, LOGOUT, REGISTER } from "../constants/actionTypes";
-import axiosInstance from "../utils/axiosInstance";
-import { removeToken, setToken } from "../utils/token";
+import { LOGIN, LOGOUT, REGISTER } from '../constants/actionTypes'
+import axiosInstance from '../utils/axiosInstance'
+import { removeToken, setToken } from '../utils/token'
 
 export const login = (dispatch, { email, password }, callback) => {
     axiosInstance
-        .post("/api/auth/login", { email, password })
+        .post('/api/v1/login', { email, password })
         .then((response) => {
+            console.log('response', response.data.data)
             if (response.data) {
-                const { token } = response.data;
-                setToken(token);
-                callback();
-                dispatch({ type: LOGIN, data: token });
+                const token = response.data.data
+                setToken(token)
+                callback()
+                dispatch({ type: LOGIN, data: token })
             }
         })
-        .catch((err) => setToken(null));
-};
+        .catch((err) => setToken(null))
+}
 
 export const logout = (dispatch) => {
-    dispatch({ type: LOGOUT, data: null });
-    removeToken();
-};
+    dispatch({ type: LOGOUT, data: null })
+    removeToken()
+}
 
 export const register = (dispatch, { name, email, password }, callback) => {
     axiosInstance
-        .post("/api/auth/register", { name, email, password })
+        .post('/api/v1/register', { name, email, password })
         .then((response) => {
             if (response.data) {
-                const { token } = response.data;
-                setToken(token);
-                callback();
-                dispatch({ type: REGISTER, data: token });
+                const token = response.data.data
+                setToken(token)
+                callback()
+                dispatch({ type: REGISTER, data: token })
             }
         })
-        .catch((err) => setToken(null));
-};
+        .catch((err) => setToken(null))
+}
 
-export default { login, logout };
+export default { login, logout, register }

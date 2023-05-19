@@ -1,21 +1,15 @@
-import {
-    TextInput, PasswordInput,
-    Button, Anchor,
-    Paper, Title,
-    Text, Container,
-    Group, Center
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { useNavigate } from "react-router";
+import { TextInput, PasswordInput, Button, Anchor, Paper, Title, Text, Container, Group, Center } from '@mantine/core'
+import { useForm } from '@mantine/form'
+import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
 import { register } from '../../common/state/authAction'
 
-export function Register(props){
+function Register(props) {
     const navigate = useNavigate()
-    const {register} = props;
+    const { register } = props
     const { getInputProps, onSubmit } = useForm({
         initialValues: {
-            name: "",
+            name: '',
             email: '',
             password: '',
         },
@@ -29,14 +23,12 @@ export function Register(props){
 
     const handleSubmit = (value) => {
         register(value, () => navigate('/'))
+        console.log('value', value)
     }
 
     return (
         <Container size={420} my={40}>
-            <Title
-                align={"center"}
-                sx={(theme) => ({fontFamily: `ff CF, ${theme.fontFamily}`, fontWeight : 900})}
-            >
+            <Title align={'center'} sx={(theme) => ({ fontFamily: `ff CF, ${theme.fontFamily}`, fontWeight: 900 })}>
                 JOIN สวัสดี
             </Title>
             <Text color="dimmed" size="sm" align="center" mt={5}>
@@ -47,13 +39,27 @@ export function Register(props){
             </Text>
 
             <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-                <form onSubmit={onSubmit((value, event) => {
+                <form
+                    onSubmit={onSubmit((value, event) => {
                         event.preventDefault()
                         handleSubmit(value)
-                    })}>
-                    <TextInput label="Name" placeholder={"Input Your name"} required {...getInputProps('name')}/>
-                    <TextInput label="Email" placeholder={"Input Your Email"} required mt="md" {...getInputProps('email')}/>
-                    <PasswordInput label="Password" placeholder="Your password" required mt="md" {...getInputProps('password')}/>
+                    })}
+                >
+                    <TextInput label="Name" placeholder={'Input Your name'} required {...getInputProps('name')} />
+                    <TextInput
+                        label="Email"
+                        placeholder={'Input Your Email'}
+                        required
+                        mt="md"
+                        {...getInputProps('email')}
+                    />
+                    <PasswordInput
+                        label="Password"
+                        placeholder="Your password"
+                        required
+                        mt="md"
+                        {...getInputProps('password')}
+                    />
                     <Button type="submit" fullWidth mt="xl">
                         Sign up
                     </Button>
