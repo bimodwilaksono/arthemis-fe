@@ -3,5 +3,6 @@ export const constants = {
         LOGIN: "/login",
         REGISTER: "/register",
         DASHBOARD: "/",
+        ORDER : "/order"
     },
 };

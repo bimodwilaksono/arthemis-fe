@@ -6,6 +6,7 @@ import Layouts from './components/Layouts'
 import PreLoading from './components/Loading/index.jsx'
 import { Suspense } from 'react'
 import Login from './pages/Login/Login.jsx'
+import Order from "./pages/Order/index.jsx";
 
 const { ROUTES } = constants
 
@@ -16,6 +17,7 @@ function App() {
                 <Routes>
                     <Route exact path={ROUTES.LOGIN} element={<Login />} />
                     <Route exact path={ROUTES.REGISTER} element={<Register />} />
+                    <Route exact path={ROUTES.ORDER} element={<Layouts><Order/></Layouts>} />
                     <Route element={<Layouts />} path={ROUTES.DASHBOARD} />
                 </Routes>
             </Suspense>
