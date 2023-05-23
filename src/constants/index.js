@@ -3,6 +3,7 @@ export const constants = {
         LOGIN: "/login",
         REGISTER: "/register",
         DASHBOARD: "/",
-        ORDER : "/order"
+        ORDER : "/order",
+        CAMPSITE: "/campsite"
     },
 };

@@ -7,8 +7,17 @@ import PreLoading from './components/Loading/index.jsx'
 import { Suspense } from 'react'
 import Login from './pages/Login/Login.jsx'
 import Order from "./pages/Order/index.jsx";
+import Campsite from './pages/Campsite/index.jsx'
 
 const { ROUTES } = constants
+
+const testDataForCampsites = [
+    {id: "0", name: "King", location: "Tangerang"},
+    {id: "1", name: "Queen", location: "Pekalongan"},
+    {id: "2", name: "Jack", location: "Yogyakarta"},
+    {id: "3", name: "Ten", location: "Sleman"},
+    {id: "4", name: "Nine", location: "Kediri"}
+]
 
 function App() {
     return (
@@ -18,6 +27,7 @@ function App() {
                     <Route exact path={ROUTES.LOGIN} element={<Login />} />
                     <Route exact path={ROUTES.REGISTER} element={<Register />} />
                     <Route exact path={ROUTES.ORDER} element={<Layouts><Order/></Layouts>} />
+                    <Route exact path={ROUTES.CAMPSITE} element={<Layouts><Campsite menuList={testDataForCampsites}/></Layouts>} />
                     <Route element={<Layouts />} path={ROUTES.DASHBOARD} />
                 </Routes>
             </Suspense>

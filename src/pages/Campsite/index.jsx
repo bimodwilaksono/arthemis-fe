@@ -8,7 +8,7 @@ const data = [
     {checkInDate : null, checkOutDate : null, user : null, campsite : null}
 ]
 
-const Order = (props) => {
+const Campsite = (props) => {
     const { menuList, getAllMenu, getMenuById, deleteMenuById } = props;
     const [opened, {open, close}] = useDisclosure(false);
     const [openedAddNew, {open : {}, close : {}}] = useDisclosure(false);
@@ -28,10 +28,8 @@ const Order = (props) => {
     const rows = menuList?.map((element) => {
         return (
             <tr key={element.id}>
-                <td>{element.checkInDate}</td>
-                <td>{element.checkOutDate}</td>
-                <td>{element.user}</td>
-                <td>{element.campsite}</td>
+                <td>{element.name}</td>
+                <td>{element.location}</td>
                 <td>
                     <Flex>
                         <Tooltip label='Edit'>
@@ -52,14 +50,14 @@ const Order = (props) => {
 
     const openDeleteModal = (id) => {
         return modals.openConfirmModal({
-            title: "Delete Order",
+            title: "Delete Campsite",
             centered: true,
             children: (
                 <Text size='sm'>
-                    Are you sure you want to delete menu? This action is destructive.
+                    Are you sure you want to delete the camp? This action is destructive.
                 </Text>
             ),
-            labels: { confirm: "Delete Order", cancel: "Cancel" },
+            labels: { confirm: "Delete Campsite", cancel: "Cancel" },
             confirmProps: { color: "red" },
             onCancel: () => console.log("Cancel"),
             onConfirm: () => deleteMenuById(id),
@@ -68,22 +66,20 @@ const Order = (props) => {
 
     return (
         <>
-            <Title>Order List</Title>
+            <Title>Campsite List</Title>
             <Table>
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
-                    <th>Type</th>
-                    <th>Price</th>
+                    <th>Location</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
             </Table>
-            <Button onClick={openedAddNew}>Add Menu</Button>
+            <Button onClick={openedAddNew}>Add Campsite</Button>
         </>
     )
 }
 
-export default Order
+export default Campsite
