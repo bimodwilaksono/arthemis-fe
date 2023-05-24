@@ -9,7 +9,7 @@ const data = [
 ]
 
 const Order = (props) => {
-    const { menuList, getAllMenu, getMenuById, deleteMenuById } = props;
+    const { orderList, getAllOrder, getOrderById, deleteOrderById } = props;
     const [opened, {open, close}] = useDisclosure(false);
     const [openedAddNew, {open : {}, close : {}}] = useDisclosure(false);
 
@@ -25,7 +25,7 @@ const Order = (props) => {
 
     }
 
-    const rows = menuList?.map((element) => {
+    const rows = orderList?.map((element) => {
         return (
             <tr key={element.id}>
                 <td>{element.checkInDate}</td>
@@ -56,13 +56,13 @@ const Order = (props) => {
             centered: true,
             children: (
                 <Text size='sm'>
-                    Are you sure you want to delete menu? This action is destructive.
+                    Are you sure you want to delete order? This action is destructive.
                 </Text>
             ),
             labels: { confirm: "Delete Order", cancel: "Cancel" },
             confirmProps: { color: "red" },
             onCancel: () => console.log("Cancel"),
-            onConfirm: () => deleteMenuById(id),
+            onConfirm: () => deleteOrderById(id),
         });
     };
 
@@ -72,7 +72,6 @@ const Order = (props) => {
             <Table>
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Type</th>
                     <th>Price</th>
