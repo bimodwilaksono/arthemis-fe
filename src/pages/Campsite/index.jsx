@@ -3,33 +3,41 @@ import {ActionIcon, Button, Flex, Table, Text, Title, Tooltip} from "@mantine/co
 import {useDisclosure} from "@mantine/hooks";
 import {modals} from "@mantine/modals"
 import {IconEdit, IconTrash} from "@tabler/icons-react";
+import FormCampsite from "../../components/FormCampsite/index.jsx";
+import AddNewModal from "../../components/AddNewModal/index.jsx";
+import EditModal from "../../components/EditModal/index.jsx";
 
 const data = [
     {checkInDate : null, checkOutDate : null, user : null, campsite : null}
 ]
 
 const Campsite = (props) => {
-    const { menuList, getAllMenu, getMenuById, deleteMenuById } = props;
+    const { campsiteList, getAllCampsite, getCampsiteById, deleteCampsiteById } = props;
     const [opened, {open, close}] = useDisclosure(false);
-    const [openedAddNew, {open : {}, close : {}}] = useDisclosure(false);
+    const [openedAddNew, {open : {openAddNew}, close : {closeAddNew}}] = useDisclosure(false);
+    console.log(campsiteList);
+    console.log(opened)
 
     useEffect(() => {
-
+        // getAllCampsite()
     }, [])
 
     const onActionEdit = (id) => {
-
+        // getCampsiteById(id, () => open())
+        open();
     }
 
     const onActionDelete = (id) => {
-
+        // deleteCampsiteById(id)
     }
 
-    const rows = menuList?.map((element) => {
+    const rows = campsiteList?.map((element) => {
         return (
             <tr key={element.id}>
                 <td>{element.name}</td>
-                <td>{element.location}</td>
+                <td>{element.address}</td>
+                <td>{element.province}</td>
+
                 <td>
                     <Flex>
                         <Tooltip label='Edit'>
@@ -60,7 +68,7 @@ const Campsite = (props) => {
             labels: { confirm: "Delete Campsite", cancel: "Cancel" },
             confirmProps: { color: "red" },
             onCancel: () => console.log("Cancel"),
-            onConfirm: () => deleteMenuById(id),
+            onConfirm: () => deleteCampsiteById(id),
         });
     };
 
@@ -71,13 +79,26 @@ const Campsite = (props) => {
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Location</th>
+                    <th>Address</th>
+                    <th>Province</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
+                <AddNewModal
+                    title={"Form Campsite"}
+                    children={<FormCampsite />}
+                    close={closeAddNew}
+                    opened={openedAddNew}
+                />
+                <EditModal
+                    title={"Form menu"}
+                    children={<FormCampsite />}
+                    close={close}
+                    opened={opened}
+                />
             </Table>
-            <Button onClick={openedAddNew}>Add Campsite</Button>
+            <Button onClick={openAddNew}>Add Campsite</Button>
         </>
     )
 }
