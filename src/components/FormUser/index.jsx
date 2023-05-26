@@ -23,7 +23,7 @@ const FormUser = (props) => {
 
     const handleSubmit = (value) => {
         updateUserById(payload?.id, value, () => close())
-        getAllUsers()
+        // getAllUsers()
     }
 
     return (

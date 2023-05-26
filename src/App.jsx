@@ -13,14 +13,6 @@ import Users from './pages/Users/index.jsx'
 
 const { ROUTES } = constants
 
-const testDataForCampsites = [
-    { id: '0', name: 'King', address: null, province: 'Tangerang' },
-    { id: '1', name: 'Queen', address: null, province: 'Tangerang' },
-    { id: '2', name: 'Jack', address: null, province: 'Tangerang' },
-    { id: '3', name: 'Ten', address: null, province: 'Tangerang' },
-    { id: '4', name: 'Nine', address: null, province: 'Tangerang' },
-]
-
 function App() {
     return (
         <ThemeProvider>
@@ -43,7 +35,7 @@ function App() {
                             path={ROUTES.CAMPSITE}
                             element={
                                 <Layouts>
-                                    <Campsite campsiteList={testDataForCampsites} />
+                                    <Campsite />
                                 </Layouts>
                             }
                         />

@@ -1,39 +1,36 @@
-import React, { useEffect } from 'react'
-import { ActionIcon, Button, Flex, Table, Text, Title, Tooltip } from '@mantine/core'
+import React, { useEffect, useState } from 'react'
+import { ActionIcon, Button, Flex, Loader, Table, Text, Title, Tooltip } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { modals } from '@mantine/modals'
-import { IconEdit, IconTrash } from '@tabler/icons-react'
+import { IconEdit, IconRefresh, IconTrash } from '@tabler/icons-react'
 import FormCampsite from '../../components/FormCampsite/index.jsx'
 import AddNewModal from '../../components/AddNewModal/index.jsx'
 import EditModal from '../../components/EditModal/index.jsx'
-
-const data = [{ checkInDate: null, checkOutDate: null, user: null, campsite: null }]
+import { connect } from 'react-redux'
+import { getAllCampsites, deleteCampById, getCampById } from './state/campsiteAction.js'
+import EmptyState from '../../components/EmptyState/index.jsx'
+import PaginationControlled from '../../components/PaginationControlled/index.jsx'
 
 const Campsite = (props) => {
-    const { campsiteList, getAllCampsite, getCampsiteById, deleteCampsiteById } = props
+    const { campList, getAllCampsites, getCampById, deleteCampById, totalPages } = props
     const [opened, { open, close }] = useDisclosure(false)
-    const [
-        openedAddNew,
-        {
-            open: { openAddNew },
-            close: { closeAddNew },
-        },
-    ] = useDisclosure(false)
+    const [openedAddNew, { open: openAddNew, close: closeAddNew }] = useDisclosure(false)
+    const [isRefresh, setIsRefresh] = useState(false)
+    const [activePage, setActivePage] = useState(1)
 
     useEffect(() => {
-        // getAllCampsite()
+        getAllCampsites()
     }, [])
 
     const onActionEdit = (id) => {
-        // getCampsiteById(id, () => open())
-        open()
+        getCampById(id, () => open())
     }
 
     const onActionDelete = (id) => {
-        // deleteCampsiteById(id)
+        deleteCampById(id)
     }
 
-    const rows = campsiteList?.map((element) => {
+    const rows = campList?.map((element) => {
         return (
             <tr key={element.id}>
                 <td>{element.name}</td>
@@ -66,34 +63,64 @@ const Campsite = (props) => {
             labels: { confirm: 'Delete Campsite', cancel: 'Cancel' },
             confirmProps: { color: 'red' },
             onCancel: () => console.log('Cancel'),
-            onConfirm: () => deleteCampsiteById(id),
+            onConfirm: () => onActionDelete(id),
         })
+    }
+
+    const handleRefresh = async () => {
+        try {
+            setIsRefresh(true)
+            await getAllCampsites()
+            setTimeout(() => setIsRefresh(false), 500)
+        } catch (error) {}
     }
 
     return (
         <>
-            <Title>Campsite List</Title>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Province</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-                <AddNewModal
-                    title={'Form Campsite'}
-                    children={<FormCampsite />}
-                    close={closeAddNew}
-                    opened={openedAddNew}
-                />
-                <EditModal title={'Form menu'} children={<FormCampsite />} close={close} opened={opened} />
-            </Table>
-            <Button onClick={openAddNew}>Add Campsite</Button>
+            <Flex align={'center'} gap={10}>
+                <Title>Campsite List</Title>
+                <Tooltip label="Refresh">
+                    <ActionIcon onClick={() => handleRefresh()}>
+                        <IconRefresh color="blue" />
+                    </ActionIcon>
+                </Tooltip>
+                <Button onClick={openAddNew}>Add Campsite</Button>
+            </Flex>
+            {isRefresh ? (
+                <Flex size={'lg'} align={'center'} justify={'center'} mx={'lg'} h={'50vh'}>
+                    <Loader />
+                </Flex>
+            ) : (
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Province</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    {campList?.length > 0 ? <tbody>{rows}</tbody> : null}
+
+                    <AddNewModal
+                        title={'Form Campsite'}
+                        children={<FormCampsite />}
+                        close={closeAddNew}
+                        opened={openedAddNew}
+                    />
+                    <EditModal title={'Form menu'} children={<FormCampsite />} close={close} opened={opened} />
+                </Table>
+            )}
+            <PaginationControlled activePage={activePage} setActivePage={setActivePage} totalPages={totalPages} />
+            {campList?.length > 0 ? null : <EmptyState />}
         </>
     )
 }
 
-export default Campsite
+const mapStateToProps = (state) => ({
+    campList: state.camp.campList,
+    totalPages: state.user.totalPages,
+})
+
+export default connect(mapStateToProps, { getAllCampsites, deleteCampById, getCampById })(Campsite)
