@@ -4,17 +4,17 @@ import { removeToken, setToken } from '../utils/token'
 
 export const login = (dispatch, { email, password }, callback) => {
     axiosInstance
-        .post('/api/v1/login', { email, password })
+        .post('/api/v1/login-admin', { email, password })
         .then((response) => {
             console.log('response', response.data.data)
             if (response.data) {
                 const token = response.data.data
                 setToken(token)
-                callback()
                 dispatch({ type: LOGIN, data: token })
+                callback()
             }
         })
-        .catch((err) => setToken(null))
+        .catch((err) => {})
 }
 
 export const logout = (dispatch) => {

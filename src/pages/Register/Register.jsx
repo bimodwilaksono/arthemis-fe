@@ -3,6 +3,9 @@ import { useForm } from '@mantine/form'
 import { useNavigate } from 'react-router'
 import { connect } from 'react-redux'
 import { register } from '../../common/state/authAction'
+import { constants } from '../../constants'
+
+const { ROUTES } = constants
 
 function Register(props) {
     const navigate = useNavigate()
@@ -22,8 +25,7 @@ function Register(props) {
     })
 
     const handleSubmit = (value) => {
-        register(value, () => navigate('/'))
-        console.log('value', value)
+        register(value, () => navigate(ROUTES.LOGIN))
     }
 
     return (
@@ -33,7 +35,7 @@ function Register(props) {
             </Title>
             <Text color="dimmed" size="sm" align="center" mt={5}>
                 Already have an account?{'  '}
-                <Anchor size="sm" component="button">
+                <Anchor size="sm" component="button" onClick={() => navigate(ROUTES.LOGIN)}>
                     Log in to your Account
                 </Anchor>
             </Text>

@@ -3,7 +3,9 @@ import { useForm } from '@mantine/form'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../common/state/authAction'
+import { constants } from '../../constants'
 
+const { ROUTES } = constants
 function Login(props) {
     const navigate = useNavigate()
     const { login } = props
@@ -20,7 +22,8 @@ function Login(props) {
     })
 
     const handleSubmit = (value) => {
-        login(value, () => navigate('/'))
+
+        login(value, () => navigate("/"))
     }
     return (
         <Container size={420} my={40}>
@@ -29,7 +32,13 @@ function Login(props) {
             </Title>
             <Text color="dimmed" size="sm" align="center" mt={5}>
                 Do not have an account yet?{'  '}
-                <Anchor size="sm" component="button" onClick={() => {}}>
+                <Anchor
+                    size="sm"
+                    component="button"
+                    onClick={() => {
+                        navigate(ROUTES.REGISTER)
+                    }}
+                >
                     Create Account
                 </Anchor>
             </Text>
