@@ -48,6 +48,14 @@ function App() {
                                 </Layouts>
                             }
                         />
+                        <Route
+                            path={ROUTES.ORDER}
+                            element={
+                                <Layouts>
+                                    <Order />
+                                </Layouts>
+                            }
+                        />
                     </Routes>
                 </Suspense>
             </ModalsProvider>
