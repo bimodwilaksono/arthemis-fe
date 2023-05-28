@@ -1,18 +1,18 @@
 import userServices from '../../../services/userServices'
 
-export const getAllUsers = () => {
+export const getAllUsers = (page = 1) => {
     return function (dispatch) {
-        userServices.getAll(dispatch)
+        userServices.getAll(dispatch, page)
     }
 }
 
-export const updateUserById = (id, payloadUser, callback) => {
+export const updateUserById = (id, payloadUser, callback, page) => {
     const payload = {
         id: id,
         ...payloadUser,
     }
     return function (dispatch) {
-        userServices.updateById(dispatch, payload, callback)
+        userServices.updateById(dispatch, payload, callback, page)
     }
 }
 
@@ -22,8 +22,8 @@ export const getUserById = (id, callback) => {
     }
 }
 
-export const deleteUserById = (id) => {
+export const deleteUserById = (id, page) => {
     return function (dispatch) {
-        userServices.deleteById(id)
+        userServices.deleteById(id, dispatch, page)
     }
 }

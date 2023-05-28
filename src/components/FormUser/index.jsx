@@ -6,7 +6,7 @@ import { useForm } from '@mantine/form'
 import { updateUserById, getAllUsers } from '../../pages/Users/state/userAction'
 
 const FormUser = (props) => {
-    const { close, payload, updateUserById, getAllUsers } = props
+    const { close, payload, updateUserById, getAllUsers, page } = props
     const { getInputProps, onSubmit } = useForm({
         initialValues: {
             name: payload?.name,
@@ -22,8 +22,7 @@ const FormUser = (props) => {
     })
 
     const handleSubmit = (value) => {
-        updateUserById(payload?.id, value, () => close())
-        // getAllUsers()
+        updateUserById(payload?.id, value, () => close(), page)
     }
 
     return (

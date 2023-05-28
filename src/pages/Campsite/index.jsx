@@ -22,12 +22,16 @@ const Campsite = (props) => {
         getAllCampsites()
     }, [])
 
+    useEffect(() => {
+        getAllCampsites(activePage)
+    }, [activePage])
+
     const onActionEdit = (id) => {
         getCampById(id, () => open())
     }
 
     const onActionDelete = (id) => {
-        deleteCampById(id)
+        deleteCampById(id, activePage)
     }
 
     const rows = campList?.map((element) => {
@@ -70,7 +74,7 @@ const Campsite = (props) => {
     const handleRefresh = async () => {
         try {
             setIsRefresh(true)
-            await getAllCampsites()
+            await getAllCampsites(activePage)
             setTimeout(() => setIsRefresh(false), 500)
         } catch (error) {}
     }
@@ -109,7 +113,7 @@ const Campsite = (props) => {
                         close={closeAddNew}
                         opened={openedAddNew}
                     />
-                    <EditModal title={'Form menu'} children={<FormCampsite />} close={close} opened={opened} />
+                    <EditModal title={'Form menu'} children={<FormCampsite page={activePage} />} close={close} opened={opened} />
                 </Table>
             )}
             <PaginationControlled activePage={activePage} setActivePage={setActivePage} totalPages={totalPages} />

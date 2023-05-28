@@ -1,8 +1,8 @@
 import orderServices from '../../../services/orderServices'
 
-export const getAllOrders = () => {
+export const getAllOrders = (page = 1) => {
     return function (dispatch) {
-        orderServices.getAll(dispatch)
+        orderServices.getAll(dispatch, page)
     }
 }
 
@@ -12,8 +12,8 @@ export const getOrderById = (id, callback) => {
     }
 }
 
-export const updateOrderById = (id, payloadOrder, callback) => {
+export const updateOrderById = (id, payloadOrder, callback, page) => {
     return function (dispatch) {
-        orderServices.updateById(dispatch, id, payloadOrder, callback)
+        orderServices.updateById(dispatch, id, payloadOrder, callback, page)
     }
 }

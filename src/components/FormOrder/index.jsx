@@ -18,7 +18,7 @@ const isValidCheckOut = (checkOutDate, isCheckIn) => {
 }
 
 const FormOrder = (props) => {
-    const { close, payload, updateOrderById } = props
+    const { close, payload, updateOrderById, page } = props
     const { getInputProps, onSubmit } = useForm({
         initialValues: {
             checkInStatus: payload?.isCheckIn,
@@ -39,7 +39,7 @@ const FormOrder = (props) => {
             // userId: payload?.user?.id,
             // campsiteId: payload?.campsite?.id,
         }
-        updateOrderById(payload?.id, newPayload, () => close())
+        updateOrderById(payload?.id, newPayload, () => close(), page)
     }
     return (
         <Paper>

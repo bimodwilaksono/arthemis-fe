@@ -1,9 +1,9 @@
 import { SET_TOTAL_PAGE, SET_USER_DATA, SET_USER_PAYLOAD } from '../constants/actionTypes'
 import axiosInstance from '../utils/axiosInstance'
 
-const getAll = (dispatch) => {
+const getAll = (dispatch, page) => {
     axiosInstance
-        .get('/api/v1/user')
+        .get(`/api/v1/user?page=${page}`)
         .then((response) => {
             if (response.status === 201 || response.status === 200) {
                 const { content, totalPages } = response.data.data
@@ -20,12 +20,12 @@ const getAll = (dispatch) => {
         .catch((error) => console.error(error))
 }
 
-const updateById = async (dispatch, payload, callback) => {
+const updateById = async (dispatch, payload, callback, page) => {
     const { id } = payload
     try {
         await axiosInstance.put(`/api/v1/user-role`, { userId: id, newRole: payload.role })
         await axiosInstance.patch(`/api/v1/user/update-email/${id}`, { name: payload.name, email: payload.email })
-        getAll(dispatch)
+        getAll(dispatch, page)
         callback()
     } catch (error) {}
 }
@@ -40,10 +40,10 @@ const getById = (dispatch, id, callback) => {
     })
 }
 
-const deleteById = async (id) => {
+const deleteById = async (id, dispatch, page) => {
     try {
         await axiosInstance.delete(`/api/v1/user/${id}`)
-        getAll()
+        getAll(dispatch, page)
     } catch (error) {}
 }
 

@@ -6,7 +6,7 @@ import { useForm } from '@mantine/form'
 import { updateCampById, getAllCampsites, createNewCamp } from '../../pages/Campsite/state/campsiteAction'
 
 const FormCampsite = (props) => {
-    const { close, payload, updateCampById, createNewCamp } = props
+    const { close, payload, updateCampById, createNewCamp, page } = props
     const { getInputProps, onSubmit } = useForm({
         initialValues: {
             name: payload?.name,
@@ -33,10 +33,10 @@ const FormCampsite = (props) => {
                 province: value?.province,
                 file: value?.file,
             }
-            createNewCamp(newPayload, () => close())
+            createNewCamp(newPayload, () => close(), page)
             return
         }
-        updateCampById(payload?.id, value, () => close())
+        updateCampById(payload?.id, value, () => close(), page)
     }
 
     return (

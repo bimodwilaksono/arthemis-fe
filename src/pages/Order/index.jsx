@@ -20,6 +20,10 @@ const Order = (props) => {
         getAllOrders()
     }, [])
 
+    useEffect(() => {
+        getAllOrders(activePage)
+    }, [activePage])
+
     const onActionEdit = (id) => {
         getOrderById(id, () => open())
     }
@@ -69,7 +73,7 @@ const Order = (props) => {
     const handleRefresh = async () => {
         try {
             setIsRefresh(true)
-            await getAllOrders()
+            await getAllOrders(activePage)
             setTimeout(() => setIsRefresh(false), 500)
         } catch (error) {}
     }
@@ -103,7 +107,7 @@ const Order = (props) => {
                         </tr>
                     </thead>
                     <tbody>{rows}</tbody>
-                    <EditModal title={'Form order'} children={<FormOrder />} close={close} opened={opened} />
+                    <EditModal title={'Form order'} children={<FormOrder page={activePage} />} close={close} opened={opened} />
                 </Table>
             )}
             {orderList?.length > 0 ? null : <EmptyState />}

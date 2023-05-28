@@ -1,9 +1,9 @@
 import { SET_ORDER_DATA, SET_ORDER_PAYLOAD, SET_TOTAL_PAGE } from '../constants/actionTypes'
 import axiosInstance from '../utils/axiosInstance'
 
-const getAll = (dispatch) => {
+const getAll = (dispatch, page) => {
     axiosInstance
-        .get('/api/v1/order')
+        .get(`/api/v1/order?page=${page}`)
         .then((response) => {
             if (response.status === 201 || response.status === 200) {
                 const { content, totalPages } = response.data.data
@@ -20,10 +20,10 @@ const getAll = (dispatch) => {
         .catch((error) => console.error(error))
 }
 
-const updateById = async (dispatch, id, payload, callback) => {
+const updateById = async (dispatch, id, payload, callback, page) => {
     try {
         await axiosInstance.put(`/api/v1/order/status/${id}`, payload)
-        getAll(dispatch)
+        getAll(dispatch, page)
         callback()
     } catch (error) {}
 }

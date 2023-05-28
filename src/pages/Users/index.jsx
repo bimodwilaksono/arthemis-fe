@@ -20,12 +20,17 @@ const Users = (props) => {
         getAllUsers()
     }, [])
 
+    useEffect(() => {
+        getAllUsers(activePage)
+    }, [activePage])
+
     const onActionEdit = (id) => {
         getUserById(id, () => open())
     }
 
     const onActionDelete = (id) => {
-        deleteUserById(id)
+        console.log("clicked delete")
+        deleteUserById(id, activePage)
     }
 
     const rows = userList?.map((element) => {
@@ -55,7 +60,7 @@ const Users = (props) => {
 
     const openDeleteModal = (id) => {
         return modals.openConfirmModal({
-            title: 'Delete Campsite',
+            title: 'Delete User',
             centered: true,
             children: <Text size="sm">Are you sure you want to delete the user? This action is destructive.</Text>,
             labels: { confirm: 'Delete User', cancel: 'Cancel' },
@@ -100,7 +105,7 @@ const Users = (props) => {
 
                     {userList?.length > 0 ? <tbody>{rows}</tbody> : null}
 
-                    <EditModal title={'Form user'} children={<FormUser />} close={close} opened={opened} />
+                    <EditModal title={'Form user'} children={<FormUser page={activePage} />} close={close} opened={opened} />
                 </Table>
             )}
             <PaginationControlled activePage={activePage} setActivePage={setActivePage} totalPages={totalPages} />

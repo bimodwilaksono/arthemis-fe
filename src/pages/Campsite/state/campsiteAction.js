@@ -1,18 +1,18 @@
 import campServices from '../../../services/campServices'
 
-export const getAllCampsites = () => {
+export const getAllCampsites = (page = 1) => {
     return function (dispatch) {
-        campServices.getAll(dispatch)
+        campServices.getAll(dispatch, page)
     }
 }
 
-export const updateCampById = (id, payloadCamp, callback) => {
+export const updateCampById = (id, payloadCamp, callback, page) => {
     const payload = {
         id: id,
         ...payloadCamp,
     }
     return function (dispatch) {
-        campServices.updateById(dispatch, payload, callback)
+        campServices.updateById(dispatch, payload, callback, page)
     }
 }
 
@@ -22,14 +22,14 @@ export const getCampById = (id, callback) => {
     }
 }
 
-export const deleteCampById = (id) => {
+export const deleteCampById = (id, page) => {
     return function (dispatch) {
-        campServices.deleteById(id, dispatch)
+        campServices.deleteById(id, dispatch, page)
     }
 }
 
-export const createNewCamp = (payload, callback) => {
+export const createNewCamp = (payload, callback, page) => {
     return function (dispatch) {
-        campServices.addNew(dispatch, payload, callback)
+        campServices.addNew(dispatch, payload, callback, page)
     }
 }
