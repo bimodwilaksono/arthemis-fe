@@ -13,7 +13,7 @@ import {
 } from '@tabler/icons-react'
 import { MantineLogo } from '@mantine/ds'
 import { constants } from '../../constants'
-import { useNavigate } from 'react-router-dom'
+import { matchRoutes, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../common/state/authAction'
 
@@ -73,8 +73,10 @@ const mockdata = [
 
 function NavbarMinimalColored(props) {
     const navigate = useNavigate()
+    const location = useLocation()
     const { token, logout } = props
-    const [active, setActive] = useState(2)
+    const index = mockdata.findIndex((el) => el.link === location.pathname)
+    const [active, setActive] = useState(index)
 
     const links = mockdata.map((link, index) => (
         <NavbarLink

@@ -28,7 +28,7 @@ function Login(props) {
     return (
         <Container size={420} my={40}>
             <Title align={'center'} sx={(theme) => ({ fontFamily: `ff CF, ${theme.fontFamily}`, fontWeight: 900 })}>
-                WELCOME!! สวัสดี
+                WELCOME
             </Title>
             <Text color="dimmed" size="sm" align="center" mt={5}>
                 Do not have an account yet?{'  '}

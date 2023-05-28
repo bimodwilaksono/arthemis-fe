@@ -31,7 +31,7 @@ function Register(props) {
     return (
         <Container size={420} my={40}>
             <Title align={'center'} sx={(theme) => ({ fontFamily: `ff CF, ${theme.fontFamily}`, fontWeight: 900 })}>
-                JOIN สวัสดี
+                JOIN
             </Title>
             <Text color="dimmed" size="sm" align="center" mt={5}>
                 Already have an account?{'  '}

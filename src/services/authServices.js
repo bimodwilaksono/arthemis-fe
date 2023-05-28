@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import { LOGIN, LOGOUT, REGISTER } from '../constants/actionTypes'
 import axiosInstance from '../utils/axiosInstance'
 import { removeToken, setToken } from '../utils/token'
@@ -14,7 +15,13 @@ export const login = (dispatch, { email, password }, callback) => {
                 callback()
             }
         })
-        .catch((err) => {})
+        .catch((err) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err?.response?.data?.message,
+            })
+        })
 }
 
 export const logout = (dispatch) => {
@@ -33,7 +40,14 @@ export const register = (dispatch, { name, email, password }, callback) => {
                 dispatch({ type: REGISTER, data: token })
             }
         })
-        .catch((err) => setToken(null))
+        .catch((err) => {
+            console.log("error", err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err?.response?.data?.message,
+              })
+        })
 }
 
 export default { login, logout, register }
