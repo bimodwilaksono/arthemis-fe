@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2'
 import { LOGIN, LOGOUT, REGISTER } from '../constants/actionTypes'
 import axiosInstance from '../utils/axiosInstance'
-import { removeToken, setToken } from '../utils/token'
+import { removeLocalStorage, setLocalStorage } from '../utils/storageUtils'
 
 export const login = (dispatch, { email, password }, callback) => {
     axiosInstance
@@ -9,8 +9,9 @@ export const login = (dispatch, { email, password }, callback) => {
         .then((response) => {
             console.log('response', response.data.data)
             if (response.data) {
-                const token = response.data.data
-                setToken(token)
+                const { accessToken: token, refreshToken } = response.data.data
+                setLocalStorage('token', token)
+                setLocalStorage('refreshToken', refreshToken)
                 dispatch({ type: LOGIN, data: token })
                 callback()
             }
@@ -26,7 +27,8 @@ export const login = (dispatch, { email, password }, callback) => {
 
 export const logout = (dispatch) => {
     dispatch({ type: LOGOUT, data: null })
-    removeToken()
+    removeLocalStorage('token')
+    removeLocalStorage('refreshToken')
 }
 
 export const register = (dispatch, { name, email, password }, callback) => {
@@ -34,19 +36,20 @@ export const register = (dispatch, { name, email, password }, callback) => {
         .post('/api/v1/register', { name, email, password })
         .then((response) => {
             if (response.data) {
-                const token = response.data.data
-                setToken(token)
+                const { accessToken: token, refreshToken } = response.data.data
+                setLocalStorage('token', token)
+                setLocalStorage('refreshToken', refreshToken)
                 callback()
                 dispatch({ type: REGISTER, data: token })
             }
         })
         .catch((err) => {
-            console.log("error", err)
+            console.log('error', err)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: err?.response?.data?.message,
-              })
+            })
         })
 }
 
